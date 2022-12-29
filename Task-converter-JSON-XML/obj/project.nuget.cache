@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "iQHcxfJwVAeiX7xPe1TQT8BNH1vOgeAv8/8otJS8f7rA0dl7T53f68n66x9jO5CDrp64Gr+hDYFYvTrQn5Qdiw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\37529\\source\\repos\\Task-converter-JSON---XML\\Task-converter-JSON-XML\\Task-converter-JSON-XML.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\37529\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.25\\microsoft.netcore.app.host.win-x64.3.1.25.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,14 @@
+C:\Users\37529\source\repos\Task-converter-JSON---XML\Task-converter-JSON-XML\bin\Debug\netcoreapp3.1\Task-converter-JSON-XML.exe
+C:\Users\37529\source\repos\Task-converter-JSON---XML\Task-converter-JSON-XML\bin\Debug\netcoreapp3.1\Task-converter-JSON-XML.deps.json
+C:\Users\37529\source\repos\Task-converter-JSON---XML\Task-converter-JSON-XML\bin\Debug\netcoreapp3.1\Task-converter-JSON-XML.runtimeconfig.json
+C:\Users\37529\source\repos\Task-converter-JSON---XML\Task-converter-JSON-XML\bin\Debug\netcoreapp3.1\Task-converter-JSON-XML.runtimeconfig.dev.json
+C:\Users\37529\source\repos\Task-converter-JSON---XML\Task-converter-JSON-XML\bin\Debug\netcoreapp3.1\Task-converter-JSON-XML.dll
+C:\Users\37529\source\repos\Task-converter-JSON---XML\Task-converter-JSON-XML\bin\Debug\netcoreapp3.1\Task-converter-JSON-XML.pdb
+C:\Users\37529\source\repos\Task-converter-JSON---XML\Task-converter-JSON-XML\obj\Debug\netcoreapp3.1\Task-converter-JSON-XML.csproj.AssemblyReference.cache
+C:\Users\37529\source\repos\Task-converter-JSON---XML\Task-converter-JSON-XML\obj\Debug\netcoreapp3.1\Task-converter-JSON-XML.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\37529\source\repos\Task-converter-JSON---XML\Task-converter-JSON-XML\obj\Debug\netcoreapp3.1\Task-converter-JSON-XML.AssemblyInfoInputs.cache
+C:\Users\37529\source\repos\Task-converter-JSON---XML\Task-converter-JSON-XML\obj\Debug\netcoreapp3.1\Task-converter-JSON-XML.AssemblyInfo.cs
+C:\Users\37529\source\repos\Task-converter-JSON---XML\Task-converter-JSON-XML\obj\Debug\netcoreapp3.1\Task-converter-JSON-XML.csproj.CoreCompileInputs.cache
+C:\Users\37529\source\repos\Task-converter-JSON---XML\Task-converter-JSON-XML\obj\Debug\netcoreapp3.1\Task-converter-JSON-XML.dll
+C:\Users\37529\source\repos\Task-converter-JSON---XML\Task-converter-JSON-XML\obj\Debug\netcoreapp3.1\Task-converter-JSON-XML.pdb
+C:\Users\37529\source\repos\Task-converter-JSON---XML\Task-converter-JSON-XML\obj\Debug\netcoreapp3.1\Task-converter-JSON-XML.genruntimeconfig.cache
