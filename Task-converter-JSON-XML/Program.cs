@@ -11,8 +11,8 @@ namespace Task_converter_JSON_XML
     class Program
     {
         static string currentDir = Directory.GetCurrentDirectory();
-        static string JsonPath = Path.GetFullPath(Path.Combine(currentDir, @"JSON"));
-        static string XmlPath = Path.GetFullPath(Path.Combine(currentDir, @"XML"));
+        static string jsonPath = Path.GetFullPath(Path.Combine(currentDir, @"JSON"));
+        static string xmlPath = Path.GetFullPath(Path.Combine(currentDir, @"XML"));
         public static string pathJsonFile;
 
 
@@ -26,14 +26,14 @@ namespace Task_converter_JSON_XML
             {
                 //    Console.WriteLine("The program is running. To terminate the program enter q");
                 //    Exit = Console.ReadLine();
-                if (!(Directory.Exists(JsonPath) && Directory.Exists(XmlPath)))
+                if (!(Directory.Exists(jsonPath) && Directory.Exists(xmlPath)))
                 {
-                    Directory.CreateDirectory(JsonPath);
-                    Directory.CreateDirectory(XmlPath);
+                    Directory.CreateDirectory(jsonPath);
+                    Directory.CreateDirectory(xmlPath);
 
                 }
 
-                string[] jsonFiles = Directory.GetFiles(JsonPath, "*.json");
+                string[] jsonFiles = Directory.GetFiles(jsonPath, "*.json");
                 if (jsonFiles != null)
                 {
                     foreach (var instanceJson in jsonFiles)
@@ -41,8 +41,8 @@ namespace Task_converter_JSON_XML
                         try
                         {
                             counter += 1;
-                            SerializePath = Path.GetFullPath(Path.Combine(XmlPath, $"ConverterXmlFile number {counter}.xml"));
-                            pathJsonFile = Path.GetFullPath(Path.Combine(JsonPath, instanceJson));
+                            SerializePath = Path.GetFullPath(Path.Combine(xmlPath, $"ConverterXmlFile number {counter}.xml"));
+                            pathJsonFile = Path.GetFullPath(Path.Combine(jsonPath, instanceJson));
                             using (FileStream fs = new FileStream(pathJsonFile, FileMode.Open))
                             {
                                 storageJsonFile = await JsonSerializer.DeserializeAsync<List<Person>>(fs);
