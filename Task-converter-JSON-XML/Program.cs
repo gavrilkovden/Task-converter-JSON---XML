@@ -13,82 +13,93 @@ namespace Task_converter_JSON_XML
         static string currentDir = Directory.GetCurrentDirectory();
         static string jsonPath = Path.GetFullPath(Path.Combine(currentDir, @"JSON"));
         static string xmlPath = Path.GetFullPath(Path.Combine(currentDir, @"XML"));
+        static string directoryInvalidJsonPath = Path.GetFullPath(Path.Combine(currentDir, @"InvalidJson"));
         public static string pathJsonFile;
-
+        static int counter = 0;
+        static string SerializePath;
+        static string instanceJson;
+        static List<Person> storagePeopleFromJson = new List<Person>();
+        static string Exit = null;
 
         static async Task Main(string[] args)
         {
-            int counter = 0;
-            string Exit = null;
-            List<Person> storageJsonFile = new List<Person>();
-            string SerializePath = null;
             do
             {
-                //    Console.WriteLine("The program is running. To terminate the program enter q");
-                //    Exit = Console.ReadLine();
-                if (!(Directory.Exists(jsonPath) && Directory.Exists(xmlPath)))
+                try
                 {
-                    Directory.CreateDirectory(jsonPath);
-                    Directory.CreateDirectory(xmlPath);
+                    if (!(Directory.Exists(jsonPath))) { Directory.CreateDirectory(jsonPath); }
+                    if (!(Directory.Exists(xmlPath))) { Directory.CreateDirectory(xmlPath); }
 
-                }
-
-                string[] jsonFiles = Directory.GetFiles(jsonPath, "*.json");
-                if (jsonFiles != null)
-                {
-                    foreach (var instanceJson in jsonFiles)
+                    string[] jsonFiles = Directory.GetFiles(jsonPath);
+                    if (jsonFiles.Count() != 0)
                     {
-                        try
+                        foreach (var instJson in jsonFiles)
                         {
-                            counter += 1;
-                            SerializePath = Path.GetFullPath(Path.Combine(xmlPath, $"ConverterXmlFile number {counter}.xml"));
-                            pathJsonFile = Path.GetFullPath(Path.Combine(jsonPath, instanceJson));
-                            using (FileStream fs = new FileStream(pathJsonFile, FileMode.Open))
-                            {
-                                storageJsonFile = await JsonSerializer.DeserializeAsync<List<Person>>(fs);
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            Log($"The file {instanceJson} could not deserialize. Check if the file corresponds to the class of Person");
-                            Log(ex.Message);
-                            File.Delete(pathJsonFile);
-                            storageJsonFile.Clear();
-                        }
-                        finally
-                        {
-                            if (storageJsonFile.Any())
-                            {
-                                try
-                                {
-                                    XmlSerializer xmLserializer = new XmlSerializer(typeof(List<Person>));
+                            instanceJson = instJson;
+                            storagePeopleFromJson = await ReadFromJson<List<Person>>();
 
-                                    using (FileStream fx = new FileStream(SerializePath, FileMode.Create))
-                                    {
-                                        xmLserializer.Serialize(fx, storageJsonFile);
-                                        Console.WriteLine($"Объект {instanceJson} сериализован");
-                                    }
-                                    File.Delete(pathJsonFile);
-                                }
-                                catch (Exception ex)
-                                {
-                                    Log("The file could not serialize. Check if the file corresponds to the class of Person");
-                                    Log(ex.Message);
-                                    File.Delete(pathJsonFile);
-                                }
+                            if (storagePeopleFromJson.Any())
+                            {
+                                WriteToXml(storagePeopleFromJson);
+                                File.Delete(instanceJson);
                             }
                         }
                     }
                 }
+                catch (JsonException ex)
+                {
+                    Log(ex.ToString());
+                    if (!(Directory.Exists(directoryInvalidJsonPath))) { Directory.CreateDirectory(directoryInvalidJsonPath); }
+                    string fileInvalidJsonPath = Path.GetFullPath(Path.Combine(directoryInvalidJsonPath, $"invalid jsonFile number{counter}"));
+                    File.Move(pathJsonFile, fileInvalidJsonPath);
+                }
+
+                catch (Exception ex)
+                {
+                    Log(ex.ToString());
+                    if (!(Directory.Exists(directoryInvalidJsonPath))) { Directory.CreateDirectory(directoryInvalidJsonPath); }
+                    string fileInvalidJsonPath = Path.GetFullPath(Path.Combine(directoryInvalidJsonPath, $"The invalid File {counter}"));
+                    File.Move(pathJsonFile, fileInvalidJsonPath);
+                }
+
+                finally
+                {
+                    storagePeopleFromJson.Clear();
+                }
             }
             while (Exit != "q");
         }
+
 
         public static void Log(string message)
         {
             File.AppendAllText("log.log", message);
         }
 
-    }
 
+        public static async Task<T> ReadFromJson<T>()
+        {
+            T result;
+            counter += 1;
+            SerializePath = Path.GetFullPath(Path.Combine(xmlPath, $"ConverterXmlFile number {counter}.xml"));
+            pathJsonFile = Path.GetFullPath(Path.Combine(jsonPath, instanceJson));
+            using (FileStream fs = new FileStream(pathJsonFile, FileMode.Open))
+            {
+                result = await JsonSerializer.DeserializeAsync<T>(fs);
+            }
+            return result;
+        }
+
+
+        public static void WriteToXml(List<Person> people)
+        {
+            XmlSerializer xmLserializer = new XmlSerializer(typeof(List<Person>));
+
+            using (FileStream fx = new FileStream(SerializePath, FileMode.Create))
+            {
+                xmLserializer.Serialize(fx, people);
+                Console.WriteLine($"Объект {instanceJson} сериализован");
+            }
+        }
+    }
 }
