@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.Json;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
@@ -14,12 +14,12 @@ namespace Task_converter_JSON_XML
         static string jsonPath = Path.GetFullPath(Path.Combine(currentDir, @"JSON"));
         static string xmlPath = Path.GetFullPath(Path.Combine(currentDir, @"XML"));
         static string directoryInvalidJsonPath = Path.GetFullPath(Path.Combine(currentDir, @"InvalidJson"));
-        public static string pathJsonFile;
         static int counter = 0;
-        static string SerializePath;
         static string instanceJson;
         static List<Person> storagePeopleFromJson = new List<Person>();
         static string Exit = null;
+        static string pathJsonFile;
+        static string serializePath;
 
         static async Task Main(string[] args)
         {
@@ -27,20 +27,23 @@ namespace Task_converter_JSON_XML
             {
                 try
                 {
-                    if (!(Directory.Exists(jsonPath))) { Directory.CreateDirectory(jsonPath); }
-                    if (!(Directory.Exists(xmlPath))) { Directory.CreateDirectory(xmlPath); }
-
+                    CreateIfNotExists(jsonPath);
+                    CreateIfNotExists(xmlPath);
                     string[] jsonFiles = Directory.GetFiles(jsonPath);
                     if (jsonFiles.Count() != 0)
                     {
                         foreach (var instJson in jsonFiles)
                         {
+                            counter += 1;
                             instanceJson = instJson;
-                            storagePeopleFromJson = await ReadFromJson<List<Person>>();
+                            serializePath = Path.GetFullPath(Path.Combine(xmlPath, $"ConverterXmlFile number {counter}.xml"));
+                            pathJsonFile = Path.GetFullPath(Path.Combine(jsonPath, instanceJson));
+
+                            storagePeopleFromJson = await ReadFromJson<List<Person>>(pathJsonFile);
 
                             if (storagePeopleFromJson.Any())
                             {
-                                WriteToXml(storagePeopleFromJson);
+                                WriteToXml(storagePeopleFromJson, serializePath);
                                 File.Delete(instanceJson);
                             }
                         }
@@ -49,7 +52,7 @@ namespace Task_converter_JSON_XML
                 catch (JsonException ex)
                 {
                     Log(ex.ToString());
-                    if (!(Directory.Exists(directoryInvalidJsonPath))) { Directory.CreateDirectory(directoryInvalidJsonPath); }
+                    CreateIfNotExists(directoryInvalidJsonPath);
                     string fileInvalidJsonPath = Path.GetFullPath(Path.Combine(directoryInvalidJsonPath, $"invalid jsonFile number{counter}"));
                     File.Move(pathJsonFile, fileInvalidJsonPath);
                 }
@@ -57,7 +60,7 @@ namespace Task_converter_JSON_XML
                 catch (Exception ex)
                 {
                     Log(ex.ToString());
-                    if (!(Directory.Exists(directoryInvalidJsonPath))) { Directory.CreateDirectory(directoryInvalidJsonPath); }
+                    CreateIfNotExists(directoryInvalidJsonPath);
                     string fileInvalidJsonPath = Path.GetFullPath(Path.Combine(directoryInvalidJsonPath, $"The invalid File {counter}"));
                     File.Move(pathJsonFile, fileInvalidJsonPath);
                 }
@@ -77,13 +80,10 @@ namespace Task_converter_JSON_XML
         }
 
 
-        public static async Task<T> ReadFromJson<T>()
+        public static async Task<T> ReadFromJson<T>(string pathJson)
         {
             T result;
-            counter += 1;
-            SerializePath = Path.GetFullPath(Path.Combine(xmlPath, $"ConverterXmlFile number {counter}.xml"));
-            pathJsonFile = Path.GetFullPath(Path.Combine(jsonPath, instanceJson));
-            using (FileStream fs = new FileStream(pathJsonFile, FileMode.Open))
+            using (FileStream fs = new FileStream(pathJson, FileMode.Open))
             {
                 result = await JsonSerializer.DeserializeAsync<T>(fs);
             }
@@ -91,14 +91,21 @@ namespace Task_converter_JSON_XML
         }
 
 
-        public static void WriteToXml(List<Person> people)
+        public static void WriteToXml(List<Person> people, string serialPath)
         {
             XmlSerializer xmLserializer = new XmlSerializer(typeof(List<Person>));
-
-            using (FileStream fx = new FileStream(SerializePath, FileMode.Create))
+            using (FileStream fx = new FileStream(serialPath, FileMode.Create))
             {
                 xmLserializer.Serialize(fx, people);
                 Console.WriteLine($"Объект {instanceJson} сериализован");
+            }
+        }
+
+        public static void CreateIfNotExists(string path)
+        {
+            if (!(Directory.Exists(path)))
+            {
+                Directory.CreateDirectory(path);
             }
         }
     }
