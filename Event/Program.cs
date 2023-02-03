@@ -9,7 +9,7 @@ namespace Event
     class Program
     {
         static string currentDir = Directory.GetCurrentDirectory();
-       static string pathOfNumbers = Path.GetFullPath(Path.Combine(currentDir, @"numbers.txt"));
+        static string pathOfNumbers = Path.GetFullPath(Path.Combine(currentDir, @"numbers.txt"));
 
         static void Main(string[] args)
         {
