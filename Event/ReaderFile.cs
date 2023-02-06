@@ -8,27 +8,24 @@ namespace Event
 {
     public class Reader
     {
-        public string numberString;
-        public string[] numbersArray;
-        public delegate void PrimeNumber(int numberFibonacci, int iterator);
+        public delegate void PrimeNumber(int number, int iterator);
         public event PrimeNumber OnPrimeNumber;
 
         public void Read(string path)
         {
             using (StreamReader reader = new StreamReader(path))
             {
-                numberString = reader.ReadToEnd();
-            }
+                string numberString = reader.ReadToEnd();
+                string[] numbersArray = numberString.Split(',');
 
-            numbersArray = numberString.Split(',');
-
-            for (int a = 3; a < numbersArray.Length; a++)
-            {
-                int number = int.Parse(numbersArray[a]);
-                bool result = IsPrimeNumber(number);
-                if (result)
+                for (int a = 3; a < numbersArray.Length; a++)
                 {
-                    OnPrimeNumber(number, a);
+                    int number = int.Parse(numbersArray[a]);
+                    bool isPrime = IsPrimeNumber(number);
+                    if (isPrime)
+                    {
+                        OnPrimeNumber(number, a);
+                    }
                 }
             }
         }

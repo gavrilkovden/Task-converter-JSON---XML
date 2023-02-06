@@ -4,11 +4,11 @@ using System.Text;
 
 namespace Event
 {
-   public class ResultShow
+   public class SearchInformation
     {
-        public void Message(int numb, int iterator)
+        public void OutputOfResult(int numb, int index)
         {
-            Console.WriteLine($"A prime number {numb} has been deected. A number {numb} in the Fibonacci sequence - {iterator}");
+            Console.WriteLine($"A prime number {numb} has been deected. A number {numb} in the Fibonacci sequence - {index}");
         }
     }
 }
