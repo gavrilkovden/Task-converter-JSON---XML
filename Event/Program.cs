@@ -15,9 +15,7 @@ namespace Event
         {
             Reader reder = new Reader();
             ResultShow resultshow = new ResultShow();
-
             reder.OnPrimeNumber += resultshow.Message;
-
             reder.Read(pathOfNumbers);
         }
     }
