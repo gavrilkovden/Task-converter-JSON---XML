@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Event
 {
-   public class SearchInformation
+   public class Information
     {
-        public void OutputOfResult(int numb, int index)
+        public void ShowResult(int numb, int index)
         {
             Console.WriteLine($"A prime number {numb} has been deected. A number {numb} in the Fibonacci sequence - {index}");
         }

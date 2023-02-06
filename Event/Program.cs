@@ -14,8 +14,8 @@ namespace Event
         static void Main(string[] args)
         {
             Reader reader = new Reader();
-            SearchInformation searchInformation = new SearchInformation();
-            reader.OnPrimeNumber += searchInformation.OutputOfResult;
+            Information searchInformation = new Information();
+            reader.OnPrimeNumber += searchInformation.ShowResult;
             reader.Read(pathOfNumbers);
         }
     }
