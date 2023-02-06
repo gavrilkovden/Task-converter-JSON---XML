@@ -6,7 +6,6 @@ using System.Text;
 
 namespace Event
 {
-
     public class Reader
     {
         public string numberString;
