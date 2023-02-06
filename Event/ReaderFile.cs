@@ -7,38 +7,43 @@ using System.Text;
 namespace Event
 {
 
-    public class ReaderFile
+    public class Reader
     {
-        static string currentDir = Directory.GetCurrentDirectory();
-
         public string numberString;
         public string[] numbersArray;
-        static public int number;
-        static public int a;
-        public delegate void PrimeNumber();
-
+        public delegate void PrimeNumber(int numberFibonacci, int iterator);
         public event PrimeNumber OnPrimeNumber;
 
-        public void ReaderTxt(string path)
+        public void Read(string path)
         {
-            StreamReader reader = new StreamReader(path);
-            numberString = reader.ReadToEnd();
+            using (StreamReader reader = new StreamReader(path))
+            {
+                numberString = reader.ReadToEnd();
+            }
+
             numbersArray = numberString.Split(',');
 
-            for (a = 3; a < numbersArray.Length; a++)
+            for (int a = 3; a < numbersArray.Length; a++)
             {
-                number = int.Parse(numbersArray[a]);
-                for (int i = 2; i < number; i++)
+                int number = int.Parse(numbersArray[a]);
+                bool result = IsPrimeNumber(number);
+                if (result)
                 {
-                    if (number % i == 0)
-                    {
-                        goto found;
-                    }
+                    OnPrimeNumber(number, a);
                 }
-                OnPrimeNumber();
-            found: ;
             }
         }
 
+        public bool IsPrimeNumber(int numberFibonacci)
+        {
+            for (int i = 2; i < numberFibonacci; i++)
+            {
+                if (numberFibonacci % i == 0)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }

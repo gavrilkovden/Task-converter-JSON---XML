@@ -13,13 +13,12 @@ namespace Event
 
         static void Main(string[] args)
         {
-            ReaderFile readFile = new ReaderFile();
-            ShowResult showResult = new ShowResult();
+            Reader reder = new Reader();
+            ResultShow resultshow = new ResultShow();
 
-            readFile.OnPrimeNumber += showResult.Message;
+            reder.OnPrimeNumber += resultshow.Message;
 
-            readFile.ReaderTxt(pathOfNumbers);
-
+            reder.Read(pathOfNumbers);
         }
     }
 }

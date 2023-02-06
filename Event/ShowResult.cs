@@ -4,12 +4,11 @@ using System.Text;
 
 namespace Event
 {
-   public class ShowResult
+   public class ResultShow
     {
-        ReaderFile readerFile = new ReaderFile();
-        public void Message()
+        public void Message(int numb, int iterator)
         {
-            Console.WriteLine($"A prime number {ReaderFile.number} has been deected. A number {ReaderFile.number} in the Fibonacci sequence - {ReaderFile.a}");
+            Console.WriteLine($"A prime number {numb} has been deected. A number {numb} in the Fibonacci sequence - {iterator}");
         }
     }
 }
